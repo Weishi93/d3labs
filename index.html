@@ -1,7 +1,45 @@
 <html>
-	<body>
-		<h1>Hello World!</h1>
-		<h2>This is new stuff.</h2>
-	</body>
+    <head>
+        <title>Gapminder - Wealth and Health</title>
+        
+        <style>
+            h1 {
+                color: white;
+                background-color: black;
+            }
+            
+            body {
+                font-family: Arial;
+                margin: 0px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Gapminder - Wealth and Health of Nations</h1>
+        <h2>Countries</h2>
+        <div id="viz"></div>
+    </body>   
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script>
+        var viz = d3.select("#viz");
+        var data;        
+        d3.json("https://raw.githubusercontent.com/CristianFelix/infoviz/master/gapminder.json", function(error, result) {
+            data = result;
+            render();
+        })
+        
+        function render() {
+            var changes = viz.selectAll("div")
+                .data(data, function(d) {return d.name});
+            
+            changes.enter()
+                    .append("div")
+                    .text(function(d) {return d.name});
+            
+            changes.exit().remove();
+            
+        }   
+    </script>
 </html>
 
